@@ -19,13 +19,14 @@
     flex-direction: column;
     gap: 20px;
     background: var(--white-clr);
+    transition: background 0.3s ease;
 }
 
 .container.dark {
     --white-clr: #1a1a1a;
     --dark-clr: #fff;
     --red-color: rgb(155, 11, 11);
-    --white-clr-2: #3a3a3a, ;
+    --white-clr-2: #3a3a3a;
 }
 
 .clock {
@@ -33,13 +34,15 @@
     width: 400px;
     background-color: var(--white-clr-2);
     border-radius: 50%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+        rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* Saat sayıları */
 .clock .outer {
     position: absolute;
     inset: 20px;
@@ -56,55 +59,75 @@
     transform: rotate(calc(var(--i)*-30deg));
 }
 
+/* Indicator (saat ortası) */
 .container .indicator {
     position: absolute;
-    height: 15px;
-    width: 15px;
-    display: flex;
-    justify-content: center;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform: translate(-50%, -50%);
 }
 
+/* Ortadaki küçük daire */
 .container .indicator::before {
     content: "";
     position: absolute;
-    height: 100%;
-    width: 100%;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 14px;
     background-color: var(--red-color);
     border-radius: 50%;
-    z-index: 1000;
-    border: 4px solid black;
+    border: 3px solid black;
+    transform: translate(-50%, -50%);
+    z-index: 10;
 }
 
+/* İbreler */
 .container .hand {
     position: absolute;
     bottom: 0;
+    left: 0;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(var(--rot, 0deg));
     border-radius: 25px;
-    transform-origin: bottom;
-    height: 130px;
+    transition: none;
+    /* tik-tik efektini JS ile kontrol edeceğiz */
+}
+
+/* Saat ibresi */
+.hand.hour {
+    width: 8px;
+    height: 100px;
+    background-color: var(--dark-clr);
+}
+
+/* Dakika ibresi */
+.hand.minute {
+    width: 6px;
+    height: 120px;
+    background-color: var(--dark-clr);
+}
+
+/* Saniye ibresi */
+.hand.second {
     width: 4px;
+    height: 140px;
     background-color: var(--red-color);
 }
 
-.hand.minute {
-    height: 120px;
-    width: 6px;
-    background-color: var(--dark-clr);
-}
-
-.hand.hour {
-    height: 100px;
-    width: 8px;
-    background-color: var(--dark-clr);
-}
-
+/* Tema değiştirici buton */
 .theme-switch {
     padding: 10px 20px;
     border-radius: 20px;
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     color: var(--white-clr-2);
     background-color: var(--dark-clr);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+        rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* inset => top left bottom right değerleri için kısayol özelliği    
