@@ -17,16 +17,18 @@ const updateTime = () => {
     secondHand.style.transform = `translateX(-50%) rotate(${secToDeg}deg)`;
 };
 
+const setThemeLabel = (isDark) => {
+    themeSwitch.textContent = isDark ? "Light Theme" : "Dark Theme";
+    themeSwitch.setAttribute("aria-pressed", String(isDark));
+};
+
 // Tema değiştirme
 themeSwitch.addEventListener("click", () => {
-    container.classList.toggle("dark");
-
-    if (container.classList.contains("dark")) {
-        themeSwitch.textContent = "Light Theme";
-    } else {
-        themeSwitch.textContent = "Dark Theme";
-    }
+    const isDark = container.classList.toggle("dark");
+    setThemeLabel(isDark);
 });
+
+setThemeLabel(container.classList.contains("dark"));
 
 // İlk çalıştırma
 updateTime();
