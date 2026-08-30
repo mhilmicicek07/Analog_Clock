@@ -1,33 +1,36 @@
-# 🕒 Analog Clock / Analog Saat / Analoge Uhr
+# Analog Clock
 
 ---
 TR — Türkçe
 ---
 
-## 🕰️ Proje Hakkında
-Bu proje, sadece HTML, CSS ve JavaScript kullanılarak oluşturulmuş basit ve şık bir **Analog Saat (Analog Clock)** uygulamasıdır. Saat, sistem zamanına göre gerçek zamanlı olarak saat, dakika ve saniye kollarını hareket ettirir.
+## Proje Hakkında
+Bu proje, sadece HTML, CSS ve JavaScript kullanılarak oluşturulmuş basit ve şık bir **Analog Saat** uygulamasıdır. Saat, sistem zamanına göre gerçek zamanlı olarak saat, dakika ve saniye kollarını hareket ettirir.
 
-## 🚀 Özellikler
-- Gerçek zamanlı dinamik saat hareketi.
-- JavaScript `Date()` API kullanımı ile doğru zamanlama.
-- CSS `transform` ve `transition` ile akıcı kol hareketleri.
-- Responsive tasarım ile farklı ekran boyutlarına uyum.
-- Klavye ile erişilebilir aydınlık/koyu tema düğmesi.
-- Hafif, bağımsız (frameworksüz) ve eğitim amaçlı okunabilir kod.
+## Özellikler
+- Gerçek zamanlı dinamik saat hareketi (`setInterval` ile her saniye güncelleme).
+- JavaScript `Date` API kullanımı ile doğru zamanlama.
+- Saniye ve dakika kolları yumuşak açı interpolasyonu ile hareket eder.
+- CSS `transform-origin` ile kolların merkezden dönmesi sağlanır.
+- Aydınlık/koyu tema geçişi; düğme etiketi ve `aria-pressed` durumu güncellenir.
+- Klavye odaklanabilir tema düğmesi (`focus-visible` outline desteği).
+- Hafif, bağımsız (framework gerektirmeyen) ve eğitim amaçlı okunabilir kod.
 
-## 🧩 Kullanılan Teknolojiler
+## Kullanılan Teknolojiler
 - HTML5 — Yapısal iskelet
-- CSS3 — Stil ve animasyonlar
+- CSS3 — Stil ve CSS değişkenleri ile tema yönetimi
 - JavaScript (ES6+) — Zaman hesaplama ve DOM güncellemeleri
 
-## 📂 Proje Dosya Yapısı
+## Proje Dosya Yapısı
+```
 Analog_Clock/
-- index.html
-- style.css
-- main.js
-- README.md
+├── index.html
+├── style.css
+├── main.js
+└── README.md
+```
 
-## ⚙️ Kurulum ve Çalıştırma
+## Kurulum ve Çalıştırma
 1. Depoyu klonla:
 ```bash
 git clone https://github.com/mhilmicicek07/Analog_Clock.git
@@ -36,19 +39,25 @@ cd Analog_Clock
 2. `index.html` dosyasını tercih ettiğin tarayıcıda aç.
 3. Hepsi bu kadar — saat, sistem saatine göre çalışacaktır.
 
-## 🧠 Teknik Notlar
-JavaScript'te saat açıları şu şekilde hesaplanır:
+## Teknik Notlar
+Saat açıları `main.js` içinde şu şekilde hesaplanır:
 ```js
-secondHand.style.transform = `rotate(${seconds * 6}deg)`;
-minuteHand.style.transform = `rotate(${minutes * 6}deg)`;
-hourHand.style.transform = `rotate(${hours * 30 + minutes / 2}deg)`;
-```
-CSS'de `transform-origin` ile kolların merkezden dönmesi sağlanır; `transition` ile akıcı hareket elde edilir.
+const secToDeg = date.getSeconds() * 6;
+const minToDeg = date.getMinutes() * 6 + (date.getSeconds() / 60) * 6;
+const hourToDeg = (date.getHours() % 12) * 30 + (date.getMinutes() / 60) * 30;
 
-## 👨‍💻 Geliştirici
+hourHand.style.transform   = `translateX(-50%) rotate(${hourToDeg}deg)`;
+minuteHand.style.transform = `translateX(-50%) rotate(${minToDeg}deg)`;
+secondHand.style.transform = `translateX(-50%) rotate(${secToDeg}deg)`;
+```
+Dakika ve saat kolları, saniye ve dakika değerlerini de hesaba katarak sürekli interpolasyon yapar. Kollar CSS `transition` yerine `setInterval(updateTime, 1000)` ile her saniye güncellenir.
+
+Tema değiştirici düğme `.dark` sınıfını `.container` üzerine ekler/kaldırır; CSS değişkenleri (`--white-clr`, `--dark-clr` vb.) kaskad aracılığıyla tüm renk değerlerini günceller.
+
+## Geliştirici
 Mehmet Hilmi Çiçek — Full Stack Web Developer
 
-## 🪪 Lisans
+## Lisans
 Açık kaynak — kodu inceleyebilir, değiştirebilir ve kişisel projelerinde kullanabilirsin.
 
 ---
@@ -56,51 +65,60 @@ Açık kaynak — kodu inceleyebilir, değiştirebilir ve kişisel projelerinde 
 EN — English
 ---
 
-## 🕰️ About
-This project is a simple, elegant Analog Clock built using only HTML, CSS and JavaScript. The clock updates the hour, minute and second hands in real time according to the system clock.
+## About
+A simple, elegant analog clock built with HTML, CSS, and JavaScript only. The clock updates the hour, minute, and second hands in real time according to the system clock.
 
-## 🚀 Features
-- Real-time dynamic clock movement.
-- Accurate time using JavaScript `Date()` API.
-- Smooth hand animations with CSS `transform` and `transition`.
-- Responsive layout across different screen sizes.
-- Accessible light/dark theme toggle button.
-- Lightweight and framework-free — great for learning.
+## Features
+- Real-time clock movement updated every second via `setInterval`.
+- Accurate time using the JavaScript `Date` API.
+- Smooth angular interpolation for the minute and hour hands.
+- CSS `transform-origin` pivots each hand from its base.
+- Light/dark theme toggle that updates both the button label and `aria-pressed`.
+- Keyboard-accessible theme button with `focus-visible` outline.
+- Lightweight and framework-free — readable code suitable for learning.
 
-## 🧩 Technologies Used
+## Technologies Used
 - HTML5 — Structure
-- CSS3 — Styling & animations
+- CSS3 — Styling and theme management via CSS custom properties
 - JavaScript (ES6+) — Time calculations and DOM updates
 
-## 📂 Project Structure
+## Project Structure
+```
 Analog_Clock/
-- index.html
-- style.css
-- main.js
-- README.md
+├── index.html
+├── style.css
+├── main.js
+└── README.md
+```
 
-## ⚙️ Installation & Usage
+## Installation & Usage
 1. Clone the repository:
 ```bash
 git clone https://github.com/mhilmicicek07/Analog_Clock.git
 cd Analog_Clock
 ```
 2. Open `index.html` in your browser.
-3. That's it — the clock will run according to your system time.
+3. That's it — the clock runs according to your system time.
 
-## 🧠 Technical Notes
-Angles are calculated as:
+## Technical Notes
+Hand angles are calculated in `main.js` as follows:
 ```js
-secondHand.style.transform = `rotate(${seconds * 6}deg)`;
-minuteHand.style.transform = `rotate(${minutes * 6}deg)`;
-hourHand.style.transform = `rotate(${hours * 30 + minutes / 2}deg)`;
-```
-Use `transform-origin` for pivoting at the correct point and `transition` for smooth motion.
+const secToDeg = date.getSeconds() * 6;
+const minToDeg = date.getMinutes() * 6 + (date.getSeconds() / 60) * 6;
+const hourToDeg = (date.getHours() % 12) * 30 + (date.getMinutes() / 60) * 30;
 
-## 👨‍💻 Author
+hourHand.style.transform   = `translateX(-50%) rotate(${hourToDeg}deg)`;
+minuteHand.style.transform = `translateX(-50%) rotate(${minToDeg}deg)`;
+secondHand.style.transform = `translateX(-50%) rotate(${secToDeg}deg)`;
+```
+The minute and hour hands interpolate continuously using sub-unit values (seconds and minutes respectively). The hands are updated via `setInterval(updateTime, 1000)` rather than a CSS transition.
+
+The theme toggle adds/removes the `.dark` class on `.container`; CSS custom properties (`--white-clr`, `--dark-clr`, etc.) cascade to update all color values.
+
+## Author
 Mehmet Hilmi Çiçek — Full Stack Web Developer
 
-## 🪪 License
+## License
 Open source — feel free to inspect, modify, and reuse.
 
 ---
@@ -108,30 +126,33 @@ Open source — feel free to inspect, modify, and reuse.
 DE — Deutsch
 ---
 
-## 🕰️ Über das Projekt
-Dieses Projekt ist eine einfache, elegante Analoge Uhr, erstellt mit nur HTML, CSS und JavaScript. Die Uhr aktualisiert Stunden-, Minuten- und Sekundenzeiger in Echtzeit anhand der Systemzeit.
+## Über das Projekt
+Eine einfache, elegante analoge Uhr, erstellt mit HTML, CSS und JavaScript. Die Uhr aktualisiert Stunden-, Minuten- und Sekundenzeiger in Echtzeit anhand der Systemzeit.
 
-## 🚀 Funktionen
-- Echtzeit-Darstellung der Uhrzeiger.
-- Präzise Zeit mit JavaScript `Date()` API.
-- Sanfte Animationen durch CSS `transform` und `transition`.
-- Responsives Design für verschiedene Bildschirmgrößen.
-- Zugänglicher Button zum Wechsel zwischen hellem/dunklem Thema.
-- Leichtgewichtig und framework-frei — gut zum Lernen.
+## Funktionen
+- Echtzeit-Darstellung der Uhrzeiger, jede Sekunde via `setInterval` aktualisiert.
+- Präzise Zeit mit der JavaScript `Date` API.
+- Weiche Winkelinterpolation für Minuten- und Stundenzeiger.
+- CSS `transform-origin` dreht jeden Zeiger um seinen Fuß.
+- Hell/Dunkel-Umschalter, der Beschriftung und `aria-pressed` aktualisiert.
+- Tastaturbedienbarer Button mit `focus-visible`-Umrandung.
+- Leichtgewichtig und framework-frei — lesbarer Code zum Lernen.
 
-## 🧩 Verwendete Technologien
+## Verwendete Technologien
 - HTML5 — Struktur
-- CSS3 — Gestaltung & Animationen
+- CSS3 — Gestaltung und Theme-Verwaltung via CSS Custom Properties
 - JavaScript (ES6+) — Zeitberechnung und DOM-Aktualisierung
 
-## 📂 Projektstruktur
+## Projektstruktur
+```
 Analog_Clock/
-- index.html
-- style.css
-- main.js
-- README.md
+├── index.html
+├── style.css
+├── main.js
+└── README.md
+```
 
-## ⚙️ Installation & Nutzung
+## Installation & Nutzung
 1. Repository klonen:
 ```bash
 git clone https://github.com/mhilmicicek07/Analog_Clock.git
@@ -140,17 +161,23 @@ cd Analog_Clock
 2. `index.html` im Browser öffnen.
 3. Fertig — die Uhr läuft entsprechend der Systemzeit.
 
-## 🧠 Technische Hinweise
-Winkel werden berechnet als:
+## Technische Hinweise
+Winkel werden in `main.js` berechnet als:
 ```js
-secondHand.style.transform = `rotate(${seconds * 6}deg)`;
-minuteHand.style.transform = `rotate(${minutes * 6}deg)`;
-hourHand.style.transform = `rotate(${hours * 30 + minutes / 2}deg)`;
-```
-`transform-origin` sorgt für die richtige Drehachse; `transition` erzeugt die flüssige Bewegung.
+const secToDeg = date.getSeconds() * 6;
+const minToDeg = date.getMinutes() * 6 + (date.getSeconds() / 60) * 6;
+const hourToDeg = (date.getHours() % 12) * 30 + (date.getMinutes() / 60) * 30;
 
-## 👨‍💻 Autor
+hourHand.style.transform   = `translateX(-50%) rotate(${hourToDeg}deg)`;
+minuteHand.style.transform = `translateX(-50%) rotate(${minToDeg}deg)`;
+secondHand.style.transform = `translateX(-50%) rotate(${secToDeg}deg)`;
+```
+Minuten- und Stundenzeiger interpolieren kontinuierlich unter Einbeziehung von Sekunden- bzw. Minutenwerten. Die Aktualisierung erfolgt über `setInterval(updateTime, 1000)` statt CSS-Transition.
+
+Der Theme-Umschalter fügt `.dark` zur `.container`-Klasse hinzu oder entfernt sie; CSS Custom Properties (`--white-clr`, `--dark-clr` usw.) aktualisieren darüber alle Farbwerte.
+
+## Autor
 Mehmet Hilmi Çiçek — Full Stack Web Developer
 
-## 🪪 Lizenz
+## Lizenz
 Open Source — Code darf eingesehen, verändert und wiederverwendet werden.
